@@ -1,84 +1,45 @@
-/* kingkingyyk, UVA 654 */
-import java.util.Arrays;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 class Main {
 	
-	public static double [] nums=new double [5000];
-	public static int numsCount=0;
+	public static void main(String[]args) throws IOException {
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		String s;
+		int t=0;
+		while ((s=br.readLine())!=null) {
+			StringTokenizer st=new StringTokenizer(s);
+			int N=Integer.parseInt(st.nextToken());
+			int D=Integer.parseInt(st.nextToken());
+			double v=(double)N/D;
+			double lastDiff=Double.MAX_VALUE;
 			
-	public static boolean hasNum (double d) {
-		for (int i=0;i<numsCount;i++) {
-			if (nums[i]==d) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static void addNum(double d) {
-		nums[numsCount++]=d;
-	}
-	
-	public static void main (String [] args) {
-		Scanner sc=new Scanner(System.in);
-		String [] s;
-		int count=0;
-		while (sc.hasNextLine()) {
-			if (count>0) {
+			if (t++>0) {
 				System.out.println();
 			}
-			count++;
-			s=sc.nextLine().split(" ");
-			double num1=Integer.parseInt(s[0]);
-			double num2=Integer.parseInt(s[1]);
-			double lastDiff=9999999.9;
-			double divideDouble=num1/num2;
-			Arrays.fill(nums,0);
-			numsCount=0;
-			int start;
-			for (int i=1;i<=num2;i++) {
-				start=(int)(divideDouble*i);
-				double frac1=start/(double)i;
-				double frac2=(start+1)/(double)i;
-				double diff1=frac1-divideDouble;
-				double diff2=frac2-divideDouble;
-				if (diff1<0) {
-					diff1=-diff1;
-				}
-				if (diff2<0) {
-					diff2=-diff2;
-				}
-				if (diff1>diff2 && diff2<lastDiff && !hasNum(frac2)) {
-					lastDiff=diff2;
-					System.out.println((start+1)+"/"+i);
-					addNum(frac2);
-					if (diff2==0) {
-						break;
-					}
-				} else if (diff2>diff1 && diff1<lastDiff && !hasNum(frac1)) {
-					lastDiff=diff1;
-					System.out.println(start+"/"+i);
-					addNum(frac1);
-					if (diff1==0) {
-						break;
-					}
+			
+			for (int d=1;d<=D;d++) {
+				double n1=(int)(v*d);
+				double n2=n1+1;
+				
+				double diff1=Math.abs(v-(n1/d));
+				double diff2=Math.abs(v-(n2/d));
+				double diff=0;
+				
+				double n=0;
+				if (diff1<diff2) {
+					n=n1;
+					diff=diff1;
 				} else {
-					if (!hasNum(frac2) && diff2<lastDiff) { //We opt for the larger ratio.
-						lastDiff=diff2;
-						System.out.println((start+1)+"/"+i);
-						addNum(frac2);
-						if (diff2==0) {
-							break;
-						}
-					} else if (!hasNum(frac1) && diff1<lastDiff) {
-						lastDiff=diff1;
-						System.out.println(start+"/"+i);
-						addNum(frac1);
-						if (diff1==0) {
-							break;
-						}
-					}
+					n=n2;
+					diff=diff2;
+				}
+				
+				if (diff<lastDiff) {
+					System.out.println((int)n+"/"+d);
+					lastDiff=diff;
 				}
 			}
 		}
