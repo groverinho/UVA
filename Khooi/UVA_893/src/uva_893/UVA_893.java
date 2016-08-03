@@ -34,7 +34,7 @@ public class UVA_893 {
                     break;
                 case(4):    c.set(year, Calendar.APRIL, day);
                     break;
-                case(35):    c.set(year, Calendar.MAY, day);
+                case(5):    c.set(year, Calendar.MAY, day);
                     break;
                 case(6):    c.set(year, Calendar.JUNE, day);
                     break;
