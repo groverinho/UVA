@@ -4,23 +4,28 @@ import java.io.InputStreamReader;
 
 class Main {
 	
-	public static void main (String [] abc) throws IOException  {
+	public static void main(String[] args)  throws IOException {
 		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 		int testCaseCount=Integer.parseInt(br.readLine());
 		for (int testCase=1;testCase<=testCaseCount;testCase++) {
-			int min=Integer.parseInt(br.readLine());
-			int max=Integer.parseInt(br.readLine());
-			int count=0;
-			if (min%2==0) {
-				min++;
+			int a=Integer.parseInt(br.readLine());
+			int b=Integer.parseInt(br.readLine());
+			
+			if (a%2==0) {
+				a++;
 			}
-			if (max%2==0) {
-				max--;
+			if (b%2==0) {
+				b--;
 			}
-			int termsCount=((max-min)/2)+1;
-			//n/2 (2a+(n-1)d)
-			count=(termsCount*(2*min+(termsCount-1)*2))/2;
-			System.out.println("Case "+testCase+": "+count);
+			
+			System.out.print("Case "+testCase+": ");
+			if (a<b) {
+				//Arithmetic Progression.
+				int n=(b-a)/2 + 1;
+				System.out.println((n*(a+b))/2);
+			} else {
+				System.out.println(a);
+			}
 		}
-	}
+	}    
 }
