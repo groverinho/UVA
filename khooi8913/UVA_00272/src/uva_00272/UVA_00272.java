@@ -13,7 +13,7 @@ public class UVA_00272 {
         String s="";
         while((s=br.readLine())!=null){
             StringBuilder st = new StringBuilder();
-            
+
             for(int j=0;j<s.length();j++){
                 if(s.charAt(j)=='\"'){
                     i++;
