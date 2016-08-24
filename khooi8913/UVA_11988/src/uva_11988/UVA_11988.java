@@ -1,5 +1,5 @@
 package uva_11988;
-//Not solved
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,31 +15,41 @@ public class UVA_11988 {
         while((s=br.readLine())!=null){
             LinkedList a = new LinkedList();
             StringBuilder st = new StringBuilder();
-            boolean home = false;
-            boolean end = true;
+            
+            boolean homeKey = false;
+            int homePressed=0;
+            boolean endKey = true;
             
             for(int i=0;i<s.length();i++){
                 if(s.charAt(i)=='['){
-                    i++;
-                    home=true;
-                    end=false;
+                    homeKey = true;
+                    homePressed=0;
+                    endKey = false;
+                }else if(s.charAt(i)==']'){
+                    endKey = true;
+                    homeKey = false;
+                }else{
+                    if(homeKey){
+                        if(homePressed==0){
+                            a.addFirst(s.charAt(i));
+                            homePressed+=1;
+                        }else if(homePressed!=0){
+                            a.add(homePressed, s.charAt(i));
+                            homePressed+=1;
+                        }
+                    }else{
+                        a.addLast(s.charAt(i));
+                    }
                 }
-                else if(s.charAt(i)==']'){
-                    i++;
-                    home=false;
-                    end=true;
-                }
-                
-                if(end==true){
-                    a.add(s.charAt(i));
-                }
-                else if(home==true){
-                    a.addFirst(s.charAt(i));
-                }
-
             }
-            System.out.println(a.toString());
+            
+            String b = a.toString();
+            for(int i=0;i<b.length();i++){
+                if(b.charAt(i)!='['&&b.charAt(i)!=']'&&b.charAt(i)!=','&&b.charAt(i)!=' ')
+                    st.append(b.charAt(i));
+            }
+            
+            System.out.println(st.toString());
         }    
     }
-    
 }
