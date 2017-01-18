@@ -1,40 +1,32 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Stack;
 
 class Main {
 	
-	public static void main (String [] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int testCases=Integer.parseInt(br.readLine());
-		for (int i=0;i<testCases;i++) {
-			char [] c=br.readLine().toCharArray();
-			char [] charStack=new char [128];
-			int stackCount=0;
-			boolean flag=true;
-			for (int i2=0;i2<c.length;i2++) {
-				if (c[i2]=='(' || c[i2]=='[') {
-					charStack[stackCount++]=c[i2];
-				} else {
-					if (stackCount==0) {
-						flag=false;
+	public static void main (String [] abc) throws IOException {
+		char [] pair=new char [128];
+		pair[')']='('; pair[']']='[';
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		int testCaseCount=Integer.parseInt(br.readLine());
+		
+		for (int testCase=0;testCase<testCaseCount;testCase++) {
+			boolean fail=false;
+			Stack<Character> stk=new Stack<>();
+			for (char c : br.readLine().toCharArray()) {
+				if (c=='(' || c=='[') {
+					stk.push(c);
+				} else if (c==')' || c==']') {
+					if (stk.isEmpty() || pair[c]!=stk.peek()) {
+						fail=true;
 						break;
-					} else {
-						if ((c[i2]==')' && charStack[stackCount-1]=='(') || (c[i2]==']' && charStack[stackCount-1]=='[')) {
-							stackCount--;
-						} else {
-							flag=false;
-							break;
-						}
-					}
+					} else stk.pop();
 				}
 			}
-			if (stackCount!=0) {
-				flag=false;
-			}
-			if (flag) {
-				System.out.println("Yes");
-			} else {
-				System.out.println("No");
-			}
+			fail=fail || !stk.empty();
+			if (fail) System.out.println("No");
+			else System.out.println("Yes");
 		}
 	}
-} 
+}
