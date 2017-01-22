@@ -1,0 +1,50 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
+
+class Main {
+	
+	public static class Instruction implements Comparable<Instruction> {
+		private int id;
+		private int timeout;
+		private int nextServiceTime;
+		
+		public Instruction (int id, int t) {
+			this.id=id;
+			this.timeout=t;
+			this.nextServiceTime=t;
+		}
+		
+		public void updateServiceTime () {
+			this.nextServiceTime+=timeout;
+		}
+		
+		public int compareTo (Instruction in) {
+			if (this.nextServiceTime!=in.nextServiceTime) return this.nextServiceTime-in.nextServiceTime;
+			return this.id-in.id;
+		}
+	}
+	
+	public static void main (String [] args) throws IOException {
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		PriorityQueue<Instruction> queue=new PriorityQueue<>();
+		String s;
+		while (!(s=br.readLine()).equals("#")) {
+			StringTokenizer st=new StringTokenizer(s);
+			st.nextToken(); //Register
+			queue.add(new Instruction(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken())));
+		}
+		int K=Integer.parseInt(br.readLine());
+		StringBuilder sb=new StringBuilder();
+		for (int i=0;i<K;i++) {
+			Instruction in=queue.poll();
+			in.updateServiceTime();
+			queue.offer(in);
+			sb.append(in.id);
+			sb.append('\n');
+		}
+		System.out.print(sb.toString());
+	}
+}
