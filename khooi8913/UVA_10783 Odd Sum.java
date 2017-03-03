@@ -1,26 +1,23 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
-public class Main {
+public class Main{
 
-    public static void main(String[] args) {
-        
-        Scanner br = new Scanner(System.in);
-        int testCases = Integer.parseInt(br.nextLine());
-        for(int i=0;i<testCases;i++){
-            int starting = Integer.parseInt(br.nextLine());
-            int ending = Integer.parseInt(br.nextLine());
-            
-            if(starting%2==0)
-                starting++;
-            
-            int sum=0;
-            
-            for(int j=starting;j<=ending;j+=2){
+    public static void main(String args[]) throws IOException {
+        int numCases=0, a=0, b=0, sum;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));   
+        numCases = Integer.parseInt(br.readLine());
+        for(int i=0;i<numCases;i++){
+            sum=0;
+            a=Integer.parseInt(br.readLine());
+            b=Integer.parseInt(br.readLine());
+            if(a%2==0)  ++a;
+            if(b%2==0)  --b;
+            for(int j=a;j<=b;j+=2){
                 sum+=j;
             }
-            
-            System.out.println("Case "+ (i+1)+": "+sum);
+            System.out.printf("Case %d: %d\n",i+1,sum);
         }
     }
-    
+
 }
