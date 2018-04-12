@@ -1,31 +1,43 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
-class Main {
-	
-	public static void main(String[]args)throws IOException  {
-		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-		String s;
-		while ((s=br.readLine())!=null && !s.equals("0")) {
-			int length=Integer.parseInt(s);
-			int minLength=length;
-			char [] data=br.readLine().toCharArray();
-			int lastPos=-1;
-			for (int i=0;i<length;i++) {
-				if (data[i]=='R' || data[i]=='D') {
-					if (lastPos==-1 || data[i]==data[lastPos]) {
-						lastPos=i;
-					} else if (data[i]!=data[lastPos]){
-						minLength=Math.min(minLength,i-lastPos);
-						lastPos=i;
-					}
-				} else if (data[i]=='Z') {
-					minLength=0;
-					break;
-				}
+/**
+Name: Grover A. Irusta Miranda
+Company: CodeRoad - Mojix
+Date 12/04/18
+ */
+public class BurgerTime11661 {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		
+		while (in.hasNext()) {
+			int n = in.nextInt();
+			if(n==0){
+				break;
 			}
-			System.out.println(minLength);
+			String s = in.next();
+			int minDistance = n;
+	        int lastR = -n, lastD = -n;
+	        for (int i = 0; i < n; ++i)
+	        {
+	            if (s.charAt(i)== 'Z')
+	            {
+	                minDistance = 0;
+	                break;
+	            }
+	            else if (s.charAt(i)== 'R')
+	            {
+	                minDistance = Math.min(minDistance, i - lastD);
+	                lastR = i;
+	            }
+	            else if (s.charAt(i) == 'D')
+	            {
+	                minDistance = Math.min(minDistance, i - lastR);
+	                lastD = i;
+	            }
+	        }
+	        System.out.println(minDistance);
 		}
 	}
+
 }
